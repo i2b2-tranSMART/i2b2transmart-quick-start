@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+
+  # nginx
+  nginx:
+    image: dbmi/nginx:${nginx_version}
+    labels:
+      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
+      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
+    restart: always
+    # application stack exposed ports
+    ports:
+      - 80:80
+      - 443:443
+
+  ## i2b2transmart stack ##
+  # transmart
+  transmart:
+    image: dbmi/i2b2transmart:${i2b2transmart_version}
+    labels:
+      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
+      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
+    env_file:
+      - ${ENV_FILE}
+    restart: always
+    depends_on:
+      - nginx
+    expose:
+      - 8080
