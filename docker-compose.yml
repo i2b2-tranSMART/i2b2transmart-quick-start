@@ -5,6 +5,8 @@ services:
   nginx:
     image: dbmi/nginx:${nginx_version}
     restart: always
+    networks:
+      - public
     # application stack exposed ports
     ports:
       - 80:80
@@ -19,21 +21,55 @@ services:
     restart: always
     depends_on:
       - nginx
+      - db
+    networks:
+      - public
     expose:
       - 8080
+
+  db:
+    image: dbmi/i2b2transmart-db:${db_version}
+    networks:
+      - public
+    expose:
+      - 1521
+    ports:
+      - ${DOCKER_DB_PORT:-1521}:1521
+    volumes:
+      - i2b2transmart-data:/opt/oracle/oradata:rw
+
 
   ## PIC-SURE API Stack ##
   # IRCT
   irct:
     image: dbmi/irct:${irct_version}
     depends_on:
-         - nginx
-         - db
+        - irctdb
+        - nginx
+        - i2b2-wildfly
     env_file:
-         - ${ENV_FILE}
+        - ${ENV_FILE}
     restart: always
+    networks:
+      - public
     expose:
-         - 8080
+        - 8080
+    command: --debug --server-config=standalone.xml
+    ports:
+        - 8787:8787
+
+ # i2b2-wildfly resource
+  i2b2-wildfly:
+    image: dbmi/i2b2-wildfly:${i2b2_wildfly_version}
+    env_file:
+      - ${ENV_FILE}
+    restart: always
+    networks:
+      - public
+    expose:
+      - 9090
+    ports:
+      - 9090:9090
 
   irct-init:
     image: dbmi/irct-init:${irct_init_version}
@@ -41,23 +77,74 @@ services:
         - irct
     env_file:
         - ${ENV_FILE}
-
+    networks:
+      - public
 
   # IRCT DB
-  db:
+  irctdb:
     image: mysql:latest
     env_file:
         - ${ENV_FILE}
-    environment:
-        - MYSQL_DATABASE=irct
     restart: always
+    networks:
+      - public
     expose:
         - 3306
     ports:
         - 3306:3306
     volumes:
-        - mysql-data:/var/lib/mysql
+        - irct-data:/var/lib/mysql
+
+
+  ## Fractalis Stack ##
+  fractalis:
+    image: sherzinger/fractalis:${fractalis_version}
+    volumes:
+        - ./config/fractalis/config.py:/config.py
+    environment:
+        - FRACTALIS_CONFIG=/config.py
+    command: gunicorn -w 3 -b :5000 --log-file - --access-logfile - fractalis:app
+    networks:
+        - public
+    expose:
+        - 5000
+    depends_on:
+        - redis
+        - rabbitmq
+        - nginx
+        - worker
+
+  worker:
+    image: sherzinger/fractalis:${fractalis_version}
+    volumes:
+        - ./config/fractalis/config.py:/config.py
+    environment:
+        - FRACTALIS_CONFIG=/config.py
+    command: celery worker -A fractalis:celery -l info --autoscale 16,4
+    networks:
+        - public
+    depends_on:
+        - redis
+        - rabbitmq
+
+  redis:
+    image: redis:alpine
+    command: >
+            sh -c "redis-server
+            && redis-cli CONFIG SET maxmemory 4gb
+            && redis-cli CONFIG SET maxmemory-policy allkeys-lru"
+    networks:
+        - public
+
+  rabbitmq:
+    image: rabbitmq:alpine
+    networks:
+        - public
 
 
 volumes:
-    mysql-data:
+  irct-data:
+  i2b2transmart-data:
+
+networks:
+  public:
