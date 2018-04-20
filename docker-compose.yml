@@ -27,6 +27,7 @@ services:
     expose:
       - 8080
 
+  # i2b2transmart database
   db:
     image: dbmi/i2b2transmart-db:${db_version}
     networks:
@@ -49,6 +50,20 @@ services:
       - 6311
     networks:
       - public
+
+  # solr
+  solr:
+    image: dbmi/solr:${solr_version}
+    labels:
+      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
+      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
+    env_file:
+      - ${ENV_FILE}
+    restart: always
+    networks:
+      - public
+    expose:
+      - 8983
 
   ## PIC-SURE API Stack ##
   # IRCT
