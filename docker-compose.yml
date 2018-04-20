@@ -38,6 +38,17 @@ services:
     volumes:
       - i2b2transmart-data:/opt/oracle/oradata:rw
 
+  # Rserve
+  rserve:
+    image: dbmi/rserve:${rserve_version}
+    labels:
+      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
+      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
+    restart: always
+    expose:
+      - 6311
+    networks:
+      - public
 
   ## PIC-SURE API Stack ##
   # IRCT
