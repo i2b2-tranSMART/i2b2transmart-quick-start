@@ -108,7 +108,7 @@ services:
 
   # IRCT DB
   irctdb:
-    image: mysql:latest
+    image: mysql:${irctdb_version}
     env_file:
         - ${ENV_FILE}
     restart: always
