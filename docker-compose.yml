@@ -21,6 +21,8 @@ services:
     restart: always
     depends_on:
       - nginx
+      - solr
+      - rserve
       - db
     networks:
       - public
@@ -64,6 +66,52 @@ services:
       - public
     expose:
       - 8983
+
+  ## Fractalis Stack ##
+  fractalis:
+    image: sherzinger/fractalis:${fractalis_version}
+    volumes:
+        - ./config/fractalis/config.py:/config.py
+    environment:
+        - FRACTALIS_CONFIG=/config.py
+    command: gunicorn -w 3 -b :5000 --log-file - --access-logfile - fractalis:app
+    networks:
+        - public
+    expose:
+        - 5000
+    depends_on:
+        - irct
+        - redis
+        - rabbitmq
+        - nginx
+        - worker
+
+  worker:
+    image: sherzinger/fractalis:${fractalis_version}
+    volumes:
+        - ./config/fractalis/config.py:/config.py
+    environment:
+        - FRACTALIS_CONFIG=/config.py
+    command: celery worker -A fractalis:celery -l info --autoscale 16,4
+    networks:
+        - public
+    depends_on:
+        - redis
+        - rabbitmq
+
+  redis:
+    image: redis:alpine
+    command: >
+            sh -c "redis-server
+            && redis-cli CONFIG SET maxmemory 4gb
+            && redis-cli CONFIG SET maxmemory-policy allkeys-lru"
+    networks:
+        - public
+
+  rabbitmq:
+    image: rabbitmq:alpine
+    networks:
+        - public
 
   ## PIC-SURE API Stack ##
   # IRCT
@@ -122,50 +170,7 @@ services:
         - irct-data:/var/lib/mysql
 
 
-  ## Fractalis Stack ##
-  fractalis:
-    image: sherzinger/fractalis:${fractalis_version}
-    volumes:
-        - ./config/fractalis/config.py:/config.py
-    environment:
-        - FRACTALIS_CONFIG=/config.py
-    command: gunicorn -w 3 -b :5000 --log-file - --access-logfile - fractalis:app
-    networks:
-        - public
-    expose:
-        - 5000
-    depends_on:
-        - redis
-        - rabbitmq
-        - nginx
-        - worker
 
-  worker:
-    image: sherzinger/fractalis:${fractalis_version}
-    volumes:
-        - ./config/fractalis/config.py:/config.py
-    environment:
-        - FRACTALIS_CONFIG=/config.py
-    command: celery worker -A fractalis:celery -l info --autoscale 16,4
-    networks:
-        - public
-    depends_on:
-        - redis
-        - rabbitmq
-
-  redis:
-    image: redis:alpine
-    command: >
-            sh -c "redis-server
-            && redis-cli CONFIG SET maxmemory 4gb
-            && redis-cli CONFIG SET maxmemory-policy allkeys-lru"
-    networks:
-        - public
-
-  rabbitmq:
-    image: rabbitmq:alpine
-    networks:
-        - public
 
 
 volumes:
