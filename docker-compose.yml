@@ -9,8 +9,8 @@ services:
       - public
     # application stack exposed ports
     ports:
-      - 80:80
-      - 443:443
+      - ${HTTP_PORT:-80}:80
+      - ${HTTPS_PORT:-443}:443
 
   ## i2b2transmart stack ##
   # transmart
@@ -36,6 +36,7 @@ services:
       - public
     expose:
       - 1521
+    # i2b2transmart database exposed port
     ports:
       - ${DOCKER_DB_PORT:-1521}:1521
     volumes:
@@ -124,15 +125,13 @@ services:
     env_file:
         - ${ENV_FILE}
     restart: always
+
     networks:
       - public
     expose:
         - 8080
-    command: --debug --server-config=standalone.xml
-    ports:
-        - 8787:8787
 
- # i2b2-wildfly resource
+  # PIC-SURE i2b2-wildfly resource
   i2b2-wildfly:
     image: dbmi/i2b2-wildfly:${i2b2_wildfly_version}
     env_file:
@@ -142,32 +141,23 @@ services:
       - public
     expose:
       - 9090
-    ports:
-      - 9090:9090
-
-  irct-init:
-    image: dbmi/irct-init:${irct_init_version}
-    depends_on:
-        - irct
-    env_file:
-        - ${ENV_FILE}
-    networks:
-      - public
 
   # IRCT DB
   irctdb:
-    image: mysql:${irctdb_version}
+    image: dbmi/irct-db:${irctdb_version}
     env_file:
         - ${ENV_FILE}
     restart: always
+    command: --datadir=/mysql/data
     networks:
       - public
     expose:
         - 3306
+    # PIC-SURE database exposed port
     ports:
-        - 3306:3306
+        - ${DOCKER_IRCT_DB_PORT:-3306}:3306
     volumes:
-        - irct-data:/var/lib/mysql
+        - irct-data:/mysql/data
 
 
 
