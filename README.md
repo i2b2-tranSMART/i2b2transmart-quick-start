@@ -57,15 +57,8 @@ To use Fractalis, your users must have emails associated with them.
     1.  Select `Show`
     2.  Select `Edit`
     3.  Add an email in the `Email` field
-    4.  Take note of the `Roles` for the user [existing issue #1](existing-issues)
-    5.  Select `Update`
-    6.  Select `Edit`
-    7.  Re-apply its `Roles`
+    4.  Select `Update`
 5.  Select `Utilities`
 6.  Select `Log Out`
 
 Once you log back in, Fractalis will be available.
-
-## Existing issues
-
-1.  Updating any user removes its `Roles`. You neeed to re-edit the user to re-apply its `Roles`.
