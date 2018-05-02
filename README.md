@@ -8,8 +8,6 @@
 ## Deploy
 
 ```bash
-$ cd deployments/i2b2transmart/release-18.1/quick-start
-
 # images take several minutes to download
 $ docker-compose pull
 
