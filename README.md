@@ -4,6 +4,7 @@
 
 -   8GB RAM
 -   80GB Hard Drive
+-   [Docker for Mac](https://docs.docker.com/docker-for-mac) and [Docker for Windows](https://docs.docker.com/docker-for-windows/) is not supported
 
 ## Deploy
 
