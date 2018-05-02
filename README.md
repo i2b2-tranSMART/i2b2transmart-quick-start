@@ -5,6 +5,10 @@
 -   8GB RAM
 -   80GB Hard Drive
 
+## Docker Machine Network Requirements
+-   Exposed port 80
+-   Exposed port 443
+
 ## Deploy
 
 ```bash
