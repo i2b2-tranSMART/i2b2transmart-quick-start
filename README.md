@@ -45,20 +45,3 @@ ERROR: for quickstart_db_1  HTTPSConnectionPool(host='xxxx', port=2376): Read ti
 ```
 
 Wait for the client to re-sync with the docker machine (~100s), and resume the deployment by running `docker-compose up -d db` again.
-
-## Fractalis
-
-To use Fractalis, your users must have emails associated with them.
-
-1.  Login as admin
-2.  Select the `Admin` Menu
-3.  Select `User List`
-4.  For each user that will use Fractalis
-    1.  Select `Show`
-    2.  Select `Edit`
-    3.  Add an email in the `Email` field
-    4.  Select `Update`
-5.  Select `Utilities`
-6.  Select `Log Out`
-
-Once you log back in, Fractalis will be available.
