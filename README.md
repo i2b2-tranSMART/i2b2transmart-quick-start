@@ -3,8 +3,13 @@
 ## Docker Machine Hardware Requirements
 
 -   8GB RAM
--   80GB Hard Drive
--   [Docker for Mac](https://docs.docker.com/docker-for-mac) and [Docker for Windows](https://docs.docker.com/docker-for-windows/) is not supported
+-   128GB Hard Drive
+-   [Docker for Mac](https://docs.docker.com/docker-for-mac) and [Docker for Windows](https://docs.docker.com/docker-for-windows/) are not supported
+
+## Compatible Docker Versions
+
+    Docker: 17.06.2+
+    docker-compose: 1.14.0+
 
 ## Deploy
 
@@ -13,6 +18,10 @@ $ cd deployments/i2b2transmart/release-18.1/quick-start
 
 # images take several minutes to download
 $ docker-compose pull
+
+# NOTE: if you are running docker-compose version 1.21.0+
+# and the pull command fails, try:
+# $ docker-compose pull --no-parallel
 
 # deploy database *first deploy only*
 # database may hang here for a few minutes
