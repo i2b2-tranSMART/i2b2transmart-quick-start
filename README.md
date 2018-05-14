@@ -11,6 +11,18 @@
     Docker: 17.06.2+
     docker-compose: 1.14.0+
 
+## Current Service Versions
+
+    nginx:          i2b2tm.release-18.1
+    i2b2transmart:  release-18.1-beta-3
+    database:       oracle.12.2.0.1-ee-i2b2.1.7.09-tm.release-18.1-v.1.2-nhanes
+    rserve:         3.2.1-tm.release-18.1
+    solr:           4.5.0-tm.release-18.1
+    i2b2-wildfly:   1.7.09c-18.1-beta-hotfix
+    fractalis:      0.4.2
+    irct:           1.4.2
+    irct database:  mysql.5.7.22-irct.1.4.2-i2b2-nhanes
+
 ## Deploy
 
 ```bash
@@ -41,12 +53,19 @@ $ docker-compose up -d
 ## Test i2b2/tranSMART release-18.1
 
 1.  Browse to your docker machine IP
-2.  i2b2/tranSMART, by default, uses self-signed certificates. If broswer complains about security, 'click OK' allow for security exception.
+2.  i2b2/tranSMART, by default, uses self-signed certificates. If the browser complains about security, 'click OK' to allow for security exception.
 3.  Default username and passwords are used, e.g. admin/admin
 
 ## Troubleshoot
 
 Biggest point of failure is deploying the database for the first time. Due to its size and resource requirements, your Docker client may timeout during first deployment of the database.
+
+Docker is transferring the data from the Docker database image to the named volume `quickstart_i2b2transmart-db`. Notice, by running `docker system df` the total volume size increase:
+
+```bash
+TYPE          TOTAL         ACTIVE        SIZE          RECLAIMABLE
+Local Volumes 11            2             25.24GB       25.24GB (100%)
+```
 
 If you run into a timeout error:
 
@@ -54,4 +73,4 @@ If you run into a timeout error:
 ERROR: for quickstart_db_1  HTTPSConnectionPool(host='xxxx', port=2376): Read timed out. (read timeout=60)
 ```
 
-Wait for the client to re-sync with the docker machine (~100s), and resume the deployment by running `docker-compose up -d db` again.
+Wait for data transfer to complete and the client to re-sync with the docker machine (~100s). Resume the deployment by running `docker-compose up -d db` again.
