@@ -1,6 +1,6 @@
 # i2b2/tranSMART release-18.1 Quick-Start
+*Database is pre-populated with the NHANES public dataset*
 
-###### _Database is pre-populated with the NHANES public dataset_
 
 ## Docker Host Hardware Requirements
 
