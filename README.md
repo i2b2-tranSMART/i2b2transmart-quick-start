@@ -1,6 +1,6 @@
-# i2b2/tranSMART release-18.1 Quick-Start
+# i2b2/tranSMART release-18.1 with NHANES Quick-Start
 
-## Docker Machine Hardware Requirements
+## Docker Host Hardware Requirements
 
 -   8GB RAM
 -   128GB Hard Drive

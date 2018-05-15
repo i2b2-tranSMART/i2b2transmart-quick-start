@@ -24,6 +24,8 @@ services:
       - solr
       - rserve
       - db
+    volumes:
+      - rserve-jobs:/tmp:rw
     networks:
       - public
     expose:
@@ -51,6 +53,8 @@ services:
     restart: always
     expose:
       - 6311
+    volumes:
+      - rserve-jobs:/tmp:rw
     networks:
       - public
 
@@ -160,12 +164,13 @@ services:
         - irct-data:/mysql/data
 
 
-
-
-
 volumes:
+  # PIC-SURE database
   irct-data:
+  # i2b2/tranSMART database
   i2b2transmart-data:
+  # shared volume for R jobs
+  rserve-jobs:
 
 networks:
   public:
