@@ -1,6 +1,6 @@
 # i2b2/tranSMART release-18.1 Quick-Start
 
-_Database is pre-populated with the NHANES public dataset_
+_Database is pre-populated with the CDC NHANES public dataset (41,474 patients with 1,300 variables per patient) https://nhanes.hms.harvard.edu
 
 ## Docker Host Hardware Requirements
 
