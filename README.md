@@ -84,3 +84,6 @@ ERROR: for quickstart_db_1  HTTPSConnectionPool(host='xxxx', port=2376): Read ti
 ```
 
 Wait for data transfer to complete and the client to re-sync with the docker machine (~100s). Resume the deployment by running `docker-compose up -d db` again.
+
+## Open discussion forum
+https://discuss.i2b2transmart.org
