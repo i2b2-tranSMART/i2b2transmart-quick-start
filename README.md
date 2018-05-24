@@ -1,12 +1,22 @@
 # i2b2/tranSMART release-18.1 Quick-Start
-*Database is pre-populated with the NHANES public dataset*
 
+_Database is pre-populated with the NHANES public dataset_
 
 ## Docker Host Hardware Requirements
 
 -   8GB RAM
 -   128GB Hard Drive
 -   [Docker for Mac](https://docs.docker.com/docker-for-mac) and [Docker for Windows](https://docs.docker.com/docker-for-windows/) are not supported
+
+## Docker Network Requirements
+
+-   HTTP (80) and HTTPS (443) ports (default)
+-   Edit `.env` file to assign different ports
+
+```bash
+HTTP_PORT=
+HTTPS_PORT=
+```
 
 ## Compatible Docker Versions
 
@@ -16,8 +26,8 @@
 ## Current Service Versions
 
     nginx:          i2b2tm.release-18.1
-    i2b2transmart:  release-18.1-beta-3
-    database:       oracle.12.2.0.1-ee-i2b2.1.7.09-tm.release-18.1-v.1.2-nhanes
+    i2b2transmart:  release-18.1-beta-5
+    database:       oracle.12.2.0.1-ee-i2b2.1.7.09-tm.release-18.1-v.1.3-nhanes
     rserve:         3.2.1-tm.release-18.1
     solr:           4.5.0-tm.release-18.1
     i2b2-wildfly:   1.7.09c-18.1-beta-hotfix
