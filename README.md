@@ -25,15 +25,15 @@ HTTPS_PORT=
 
 ## Current Service Versions
 
-    nginx:          i2b2tm.release-18.1
-    i2b2transmart:  release-18.1-beta-5
-    database:       oracle.12.2.0.1-ee-i2b2.1.7.09-tm.release-18.1-v.1.3-nhanes
-    rserve:         3.2.1-tm.release-18.1
-    solr:           4.5.0-tm.release-18.1
-    i2b2-wildfly:   1.7.09c-18.1-beta-hotfix
-    fractalis:      0.4.2
-    irct:           1.4.2
-    irct database:  mysql.5.7.22-irct.1.4.2-i2b2-nhanes
+    nginx:                  i2b2tm.release-18.1
+    i2b2transmart:          release-18.1-beta-5
+    database:               oracle.12.2.0.1-ee-i2b2.1.7.09-tm.release-18.1-v.1.3-nhanes
+    rserve:                 3.2.1-tm.release-18.1
+    solr:                   4.5.0-tm.release-18.1
+    i2b2-wildfly:           1.7.09c-18.1-beta-hotfix
+    fractalis:              0.4.2
+    irct (PIC-SURE API):    1.4.2
+    irct database:          mysql.5.7.22-irct.1.4.2-i2b2-nhanes
 
 ## Deploy
 
