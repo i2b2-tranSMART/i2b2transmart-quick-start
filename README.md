@@ -35,6 +35,10 @@ HTTPS_PORT=
     irct:           1.4.2
     irct database:  mysql.5.7.22-irct.1.4.2-i2b2-nhanes
 
+## Docker Machine Network Requirements
+-   Exposed port 80
+-   Exposed port 443
+
 ## Deploy
 
 ```bash
