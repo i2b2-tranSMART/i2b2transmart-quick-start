@@ -140,6 +140,8 @@ services:
     image: dbmi/i2b2-wildfly:${i2b2_wildfly_version}
     env_file:
       - ${ENV_FILE}
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx1024m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true
     restart: always
     networks:
       - public

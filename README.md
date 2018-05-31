@@ -1,6 +1,6 @@
 # i2b2/tranSMART release-18.1 Quick-Start
 
-_Database is pre-populated with the NHANES public dataset_
+_Database is pre-populated with the CDC NHANES public dataset (41,474 patients with 1,300 variables per patient)_
 
 ## Docker Host Hardware Requirements
 
@@ -25,21 +25,19 @@ HTTPS_PORT=
 
 ## Current Service Versions
 
-    nginx:          i2b2tm.release-18.1
-    i2b2transmart:  release-18.1-beta-5
-    database:       oracle.12.2.0.1-ee-i2b2.1.7.09-tm.release-18.1-v.1.3-nhanes
-    rserve:         3.2.1-tm.release-18.1
-    solr:           4.5.0-tm.release-18.1
-    i2b2-wildfly:   1.7.09c-18.1-beta-hotfix
-    fractalis:      0.4.2
-    irct:           1.4.2
-    irct database:  mysql.5.7.22-irct.1.4.2-i2b2-nhanes
+    nginx:                  i2b2tm.release-18.1
+    i2b2transmart:          release-18.1-beta-5
+    database:               oracle.12.2.0.1-ee-i2b2.1.7.09-tm.release-18.1-v.1.3-nhanes
+    rserve:                 3.2.1-tm.release-18.1
+    solr:                   4.5.0-tm.release-18.1
+    i2b2-wildfly:           1.7.09c-18.1-beta-hotfix
+    fractalis:              0.4.2
+    irct (PIC-SURE API):    1.4.2
+    irct database:          mysql.5.7.22-irct.1.4.2-i2b2-nhanes
 
 ## Deploy
 
 ```bash
-$ cd deployments/i2b2transmart/release-18.1/quick-start
-
 # images take several minutes to download
 $ docker-compose pull
 
@@ -86,3 +84,6 @@ ERROR: for quickstart_db_1  HTTPSConnectionPool(host='xxxx', port=2376): Read ti
 ```
 
 Wait for data transfer to complete and the client to re-sync with the docker machine (~100s). Resume the deployment by running `docker-compose up -d db` again.
+
+## Open discussion forum
+https://discuss.i2b2transmart.org
