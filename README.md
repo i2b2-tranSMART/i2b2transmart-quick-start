@@ -87,3 +87,6 @@ Wait for data transfer to complete and the client to re-sync with the docker mac
 
 ## Open discussion forum
 https://discuss.i2b2transmart.org
+
+## Docker-machine installation - MAC/Windows
+https://tinyurl.com/docker-VM
