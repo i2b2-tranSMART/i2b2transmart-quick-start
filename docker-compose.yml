@@ -79,11 +79,12 @@ services:
         - ./config/fractalis/config.py:/config.py
     environment:
         - FRACTALIS_CONFIG=/config.py
-    command: gunicorn -w 3 -b :5000 --log-file - --access-logfile - fractalis:app
+    command: gunicorn -w 3 -b :5000 --error-logfile - fractalis:app
     networks:
         - public
     expose:
         - 5000
+    restart: always
     depends_on:
         - irct
         - redis
@@ -100,6 +101,7 @@ services:
     command: celery worker -A fractalis:celery -l info --autoscale 16,4
     networks:
         - public
+    restart: always
     depends_on:
         - redis
         - rabbitmq
@@ -112,11 +114,13 @@ services:
             && redis-cli CONFIG SET maxmemory-policy allkeys-lru"
     networks:
         - public
+    restart: always
 
   rabbitmq:
     image: rabbitmq:alpine
     networks:
         - public
+    restart: always
 
   ## PIC-SURE API Stack ##
   # IRCT
