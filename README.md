@@ -31,7 +31,7 @@ HTTPS_PORT=
     rserve:                 3.2.1-tm.release-18.1
     solr:                   4.5.0-tm.release-18.1
     i2b2-wildfly:           1.7.09c-18.1-beta-hotfix
-    fractalis:              0.4.2
+    fractalis:              0.6.2
     irct (PIC-SURE API):    1.4.2
     irct database:          mysql.5.7.22-irct.1.4.2-i2b2-nhanes
 
