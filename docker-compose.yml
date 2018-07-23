@@ -4,6 +4,9 @@ services:
   # nginx
   nginx:
     image: dbmi/nginx:${nginx_version}
+    labels:
+      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
+      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     restart: always
     networks:
       - public
@@ -16,6 +19,9 @@ services:
   # transmart
   transmart:
     image: dbmi/i2b2transmart:${i2b2transmart_version}
+    labels:
+      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
+      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     env_file:
       - ${ENV_FILE}
     restart: always
@@ -34,6 +40,10 @@ services:
   # i2b2transmart database
   db:
     image: dbmi/i2b2transmart-db:${db_version}
+    labels:
+      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
+      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
+    restart: always
     networks:
       - public
     expose:
@@ -75,6 +85,10 @@ services:
   ## Fractalis Stack ##
   fractalis:
     image: sherzinger/fractalis:${fractalis_version}
+    labels:
+      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
+      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
+    restart: always
     volumes:
         - ./config/fractalis/config.py:/config.py
     environment:
@@ -93,6 +107,10 @@ services:
 
   worker:
     image: sherzinger/fractalis:${fractalis_version}
+    labels:
+      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
+      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
+    restart: always
     volumes:
         - ./config/fractalis/config.py:/config.py
     environment:
@@ -106,6 +124,10 @@ services:
 
   redis:
     image: redis:alpine
+    labels:
+      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
+      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
+    restart: always
     command: >
             sh -c "redis-server
             && redis-cli CONFIG SET maxmemory 4gb
@@ -115,6 +137,10 @@ services:
 
   rabbitmq:
     image: rabbitmq:alpine
+    labels:
+      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
+      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
+    restart: always
     networks:
         - public
 
@@ -122,6 +148,9 @@ services:
   # IRCT
   irct:
     image: dbmi/irct:${irct_version}
+    labels:
+      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
+      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     depends_on:
         - irctdb
         - nginx
@@ -138,6 +167,9 @@ services:
   # PIC-SURE i2b2-wildfly resource
   i2b2-wildfly:
     image: dbmi/i2b2-wildfly:${i2b2_wildfly_version}
+    labels:
+      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
+      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     env_file:
       - ${ENV_FILE}
     restart: always
@@ -149,6 +181,9 @@ services:
   # IRCT DB
   irctdb:
     image: dbmi/irct-db:${irctdb_version}
+    labels:
+      - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
+      - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     env_file:
         - ${ENV_FILE}
     restart: always
