@@ -23,22 +23,10 @@ HTTPS_PORT=
     Docker: 17.06.2+
     docker-compose: 1.14.0+
 
-## Current Service Versions
-
-    nginx:          i2b2tm.release-18.1
-    i2b2transmart:  release-18.1-beta-5
-    database:       oracle.12.2.0.1-ee-i2b2.1.7.09-tm.release-18.1-v.1.3-nhanes
-    rserve:         3.2.1-tm.release-18.1
-    solr:           4.5.0-tm.release-18.1
-    i2b2-wildfly:   1.7.09c-18.1-beta-hotfix
-    fractalis:      0.4.2
-    irct:           1.4.2
-    irct database:  mysql.5.7.22-irct.1.4.2-i2b2-nhanes
-
 ## Deploy
 
 ```bash
-$ cd deployments/i2b2transmart/release-18.1/quick-start
+$ cd deployments/i2b2transmart/release-18.1/quickstart
 
 # images take several minutes to download
 $ docker-compose pull
@@ -60,6 +48,13 @@ $ docker-compose logs -f db
 
 # deploy i2b2/tranSMART + fractalis
 $ docker-compose up -d
+```
+
+### To stop and remove the stack
+
+```bash
+# -v will remove any associated persistent volumes, including the database, with the stack
+$ docker-compose -f prod.yml down -v
 ```
 
 ## Test i2b2/tranSMART release-18.1
