@@ -1,6 +1,6 @@
 # i2b2/tranSMART release-18.1 Quick-Start
 
-_Database is pre-populated with the NHANES public dataset_
+_Database is pre-populated with the CDC NHANES public dataset (41,474 patients with 1,300 variables per patient)_
 
 ## Docker Host Hardware Requirements
 
@@ -81,3 +81,9 @@ ERROR: for quickstart_db_1  HTTPSConnectionPool(host='xxxx', port=2376): Read ti
 ```
 
 Wait for data transfer to complete and the client to re-sync with the docker machine (~100s). Resume the deployment by running `docker-compose up -d db` again.
+
+## Open discussion forum
+https://discuss.i2b2transmart.org
+
+## Docker-machine installation - MAC/Windows
+https://tinyurl.com/docker-VM

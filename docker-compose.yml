@@ -98,6 +98,7 @@ services:
         - public
     expose:
         - 5000
+    restart: always
     depends_on:
         - irct
         - redis
@@ -118,6 +119,7 @@ services:
     command: celery worker -A fractalis:celery -l info --autoscale 16,4
     networks:
         - public
+    restart: always
     depends_on:
         - redis
         - rabbitmq
@@ -158,7 +160,6 @@ services:
     env_file:
         - ${ENV_FILE}
     restart: always
-
     networks:
       - public
     expose:
@@ -172,6 +173,8 @@ services:
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     env_file:
       - ${ENV_FILE}
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx1024m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true
     restart: always
     networks:
       - public
