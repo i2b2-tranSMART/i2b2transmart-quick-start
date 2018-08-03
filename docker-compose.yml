@@ -93,7 +93,7 @@ services:
         - ./config/fractalis/config.py:/config.py
     environment:
         - FRACTALIS_CONFIG=/config.py
-    command: gunicorn -w 3 -b :5000 --log-file - --access-logfile - fractalis:app
+    command: gunicorn -w 3 -b :5000 --timeout 90 --log-file - fractalis:app
     networks:
         - public
     expose:
@@ -133,7 +133,9 @@ services:
     command: >
             sh -c "redis-server
             && redis-cli CONFIG SET maxmemory 4gb
-            && redis-cli CONFIG SET maxmemory-policy allkeys-lru"
+            && redis-cli CONFIG SET maxmemory-policy allkeys-lru
+            && redis-cli CONFIG SET save ''
+            && redis-cli CONFIG SET appendonly no"
     networks:
         - public
 
