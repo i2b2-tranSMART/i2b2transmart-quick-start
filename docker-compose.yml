@@ -90,21 +90,21 @@ services:
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     restart: always
     volumes:
-        - ./config/fractalis/config.py:/config.py
+      - ./config/fractalis/config.py:/config.py
     environment:
-        - FRACTALIS_CONFIG=/config.py
+      - FRACTALIS_CONFIG=/config.py
     command: gunicorn -w 3 -b :5000 --timeout 90 --log-file - fractalis:app
     networks:
-        - public
+      - public
     expose:
-        - 5000
+      - 5000
     restart: always
     depends_on:
-        - irct
-        - redis
-        - rabbitmq
-        - nginx
-        - worker
+      - irct
+      - redis
+      - rabbitmq
+      - nginx
+      - worker
 
   worker:
     image: sherzinger/fractalis:${fractalis_version}
@@ -113,16 +113,16 @@ services:
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     restart: always
     volumes:
-        - ./config/fractalis/config.py:/config.py
+      - ./config/fractalis/config.py:/config.py
     environment:
-        - FRACTALIS_CONFIG=/config.py
+      - FRACTALIS_CONFIG=/config.py
     command: celery worker -A fractalis:celery -l info --autoscale 16,4
     networks:
-        - public
+      - public
     restart: always
     depends_on:
-        - redis
-        - rabbitmq
+      - redis
+      - rabbitmq
 
   redis:
     image: redis:alpine
@@ -131,13 +131,13 @@ services:
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     restart: always
     command: >
-            sh -c "redis-server
-            && redis-cli CONFIG SET maxmemory 4gb
-            && redis-cli CONFIG SET maxmemory-policy allkeys-lru
-            && redis-cli CONFIG SET save ''
-            && redis-cli CONFIG SET appendonly no"
+      sh -c "redis-server
+      && redis-cli CONFIG SET maxmemory 4gb
+      && redis-cli CONFIG SET maxmemory-policy allkeys-lru
+      && redis-cli CONFIG SET save ''
+      && redis-cli CONFIG SET appendonly no"
     networks:
-        - public
+      - public
 
   rabbitmq:
     image: rabbitmq:alpine
@@ -146,7 +146,7 @@ services:
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     restart: always
     networks:
-        - public
+      - public
 
   ## PIC-SURE API Stack ##
   # IRCT
@@ -156,16 +156,16 @@ services:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     depends_on:
-        - irctdb
-        - nginx
-        - i2b2-wildfly
+      - irctdb
+      - nginx
+      - i2b2-wildfly
     env_file:
-        - ${ENV_FILE}
+      - ${ENV_FILE}
     restart: always
     networks:
       - public
     expose:
-        - 8080
+      - 8080
 
   # PIC-SURE i2b2-wildfly resource
   i2b2-wildfly:
@@ -190,19 +190,18 @@ services:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     env_file:
-        - ${ENV_FILE}
+      - ${ENV_FILE}
     restart: always
     command: --datadir=/mysql/data
     networks:
       - public
     expose:
-        - 3306
+      - 3306
     # PIC-SURE database exposed port
     ports:
-        - ${DOCKER_IRCT_DB_PORT:-3306}:3306
+      - ${DOCKER_IRCT_DB_PORT:-3306}:3306
     volumes:
-        - irct-data:/mysql/data
-
+      - irct-data:/mysql/data
 
 volumes:
   # PIC-SURE database
