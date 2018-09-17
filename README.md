@@ -5,8 +5,8 @@ _Database is pre-populated with the CDC NHANES public dataset (41,474 patients w
 ## Docker Host Hardware Requirements
 
 -   8GB RAM
--   128GB Hard Drive
--   [Docker for Mac](https://docs.docker.com/docker-for-mac) and [Docker for Windows](https://docs.docker.com/docker-for-windows/) are not supported
+-   128GB of free Hard Drive space
+-   [Docker for Mac](https://docs.docker.com/docker-for-mac) and [Docker for Windows](https://docs.docker.com/docker-for-windows/) are not supported unless you use docker-machine to create a VM that meets the requirements for RAM and Hard Drive space.
 
 ## Docker Network Requirements
 
