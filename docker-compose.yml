@@ -51,8 +51,6 @@ services:
     # i2b2transmart database exposed port
     ports:
       - ${DOCKER_DB_PORT:-1521}:1521
-    volumes:
-      - i2b2transmart-data:/opt/oracle/oradata:rw
 
   # Rserve
   rserve:
@@ -68,7 +66,6 @@ services:
     networks:
       - public
 
-  # solr
   solr:
     image: dbmi/solr:${solr_version}
     labels:
@@ -90,9 +87,9 @@ services:
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     restart: always
     volumes:
-      - ./config/fractalis/config.py:/config.py
+      - "${PWD}/config/fractalis:/app/conf"
     environment:
-      - FRACTALIS_CONFIG=/config.py
+      - FRACTALIS_CONFIG=/app/conf/config.py
     command: gunicorn -w 3 -b :5000 --timeout 90 --log-file - fractalis:app
     networks:
       - public
@@ -112,11 +109,14 @@ services:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     restart: always
+    # Caused problems, so I commented out the volumes.
+    # https://docs.docker.com/compose/compose-file/#/volumes-volume-driver
+    # https://stackoverflow.com/questions/45573831/docker-compose-not-able-to-copy-haproxy-cfg
     volumes:
-      - ./config/fractalis/config.py:/config.py
+      - "${PWD}/config/fractalis/:/app/conf/"
     environment:
-      - FRACTALIS_CONFIG=/config.py
-    command: celery worker -A fractalis:celery -l info --autoscale 16,4
+      - FRACTALIS_CONFIG=/app/conf/config.py
+    command: celery worker -A fractalis:celery -l debug --autoscale 16,4
     networks:
       - public
     restart: always
@@ -206,8 +206,6 @@ services:
 volumes:
   # PIC-SURE database
   irct-data:
-  # i2b2/tranSMART database
-  i2b2transmart-data:
   # shared volume for R jobs
   rserve-jobs:
 
