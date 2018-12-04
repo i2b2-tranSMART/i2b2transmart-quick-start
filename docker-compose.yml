@@ -81,15 +81,18 @@ services:
 
   ## Fractalis Stack ##
   fractalis:
-    image: sherzinger/fractalis:${fractalis_version}
+    image: sherzinger/fractalis:${fractalis_version}-quickstart
+    build:
+      context: ./fractalis
+      dockerfile: Dockerfile
+      args:
+        fractalis_version: "${fractalis_version}"
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     restart: always
-    volumes:
-      - "${PWD}/config/fractalis:/app/conf"
     environment:
-      - FRACTALIS_CONFIG=/app/conf/config.py
+      - FRACTALIS_CONFIG=/config.py
     command: gunicorn -w 3 -b :5000 --timeout 90 --log-file - fractalis:app
     networks:
       - public
@@ -104,18 +107,18 @@ services:
       - worker
 
   worker:
-    image: sherzinger/fractalis:${fractalis_version}
+    image: sherzinger/fractalis:${fractalis_version}-quickstart
+    build:
+      context: ./fractalis
+      dockerfile: Dockerfile
+      args:
+        fractalis_version: "${fractalis_version}"
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     restart: always
-    # Caused problems, so I commented out the volumes.
-    # https://docs.docker.com/compose/compose-file/#/volumes-volume-driver
-    # https://stackoverflow.com/questions/45573831/docker-compose-not-able-to-copy-haproxy-cfg
-    volumes:
-      - "${PWD}/config/fractalis/:/app/conf/"
     environment:
-      - FRACTALIS_CONFIG=/app/conf/config.py
+      - FRACTALIS_CONFIG=/config.py
     command: celery worker -A fractalis:celery -l debug --autoscale 16,4
     networks:
       - public

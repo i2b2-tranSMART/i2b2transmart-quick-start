@@ -1,0 +1,4 @@
+ARG fractalis_version
+FROM sherzinger/fractalis:${fractalis_version}
+
+COPY ./config/fractalis/config.py /config.py
