@@ -81,12 +81,12 @@ services:
 
   ## Fractalis Stack ##
   fractalis:
-    image: sherzinger/fractalis:${fractalis_version}-quickstart
     build:
-      context: ./fractalis
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile-fractalis
       args:
         fractalis_version: "${fractalis_version}"
+    image: sherzinger/fractalis:${fractalis_version}-${STACK_NAME}
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
@@ -107,12 +107,12 @@ services:
       - worker
 
   worker:
-    image: sherzinger/fractalis:${fractalis_version}-quickstart
     build:
-      context: ./fractalis
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile-fractalis
       args:
         fractalis_version: "${fractalis_version}"
+    image: sherzinger/fractalis:${fractalis_version}-${STACK_NAME}
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
