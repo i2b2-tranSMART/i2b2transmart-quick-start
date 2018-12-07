@@ -51,8 +51,6 @@ services:
     # i2b2transmart database exposed port
     ports:
       - ${DOCKER_DB_PORT:-1521}:1521
-    volumes:
-      - i2b2transmart-data:/opt/oracle/oradata:rw
 
   # Rserve
   rserve:
@@ -68,7 +66,6 @@ services:
     networks:
       - public
 
-  # solr
   solr:
     image: dbmi/solr:${solr_version}
     labels:
@@ -84,13 +81,16 @@ services:
 
   ## Fractalis Stack ##
   fractalis:
-    image: sherzinger/fractalis:${fractalis_version}
+    build:
+      context: .
+      dockerfile: Dockerfile-fractalis
+      args:
+        fractalis_version: "${fractalis_version}"
+    image: sherzinger/fractalis:${fractalis_version}-${STACK_NAME}
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     restart: always
-    volumes:
-      - ./config/fractalis/config.py:/config.py
     environment:
       - FRACTALIS_CONFIG=/config.py
     command: gunicorn -w 3 -b :5000 --timeout 90 --log-file - fractalis:app
@@ -107,16 +107,19 @@ services:
       - worker
 
   worker:
-    image: sherzinger/fractalis:${fractalis_version}
+    build:
+      context: .
+      dockerfile: Dockerfile-fractalis
+      args:
+        fractalis_version: "${fractalis_version}"
+    image: sherzinger/fractalis:${fractalis_version}-${STACK_NAME}
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     restart: always
-    volumes:
-      - ./config/fractalis/config.py:/config.py
     environment:
       - FRACTALIS_CONFIG=/config.py
-    command: celery worker -A fractalis:celery -l info --autoscale 16,4
+    command: celery worker -A fractalis:celery -l debug --autoscale 16,4
     networks:
       - public
     restart: always
@@ -206,8 +209,6 @@ services:
 volumes:
   # PIC-SURE database
   irct-data:
-  # i2b2/tranSMART database
-  i2b2transmart-data:
   # shared volume for R jobs
   rserve-jobs:
 
