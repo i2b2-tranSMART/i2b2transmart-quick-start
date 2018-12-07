@@ -6,7 +6,7 @@ db | [dbmi/i2b2transmart-db](https://hub.docker.com/r/dbmi/i2b2transmart-db/) | 
 i2b2-wildfly | [dbmi/i2b2-wildfly](https://hub.docker.com/r/dbmi/i2b2-wildfly/) | 1.7.09c-18.1-beta-hotfix-sg.0.9-alpha | 335MB
 irct | dbmi/irct | 1.4.2c |  698MB
 irctdb | dbmi/irct-db  |  mysql.5.7.22-irct.1.4.2-i2b2-wildfly | 598MB
-transmart | [dbmi/i2b2transmart](https://hub.docker.com/r/dbmi/i2b2transmart/) |  release-18.1-beta-16| 317MB
+transmart | [dbmi/i2b2transmart](https://hub.docker.com/r/dbmi/i2b2transmart/) <br /> *  [i2b2-transmart/transmart-fractalis](https://github.com/i2b2-tranSMART/transmart-fractalis/commit/be3d77a91e695da40569c77e00c245cb06fe7e78) <br />* [i2b2-tranSMART/spring-security-auth0](https://github.com/i2b2-tranSMART/spring-security-auth0/commit/ef51e4a13389718c232858f796f16b4fa2d195d3)  |  release-18.1-beta-16| 317MB
 rserve | dbmi/rserve | 3.2.1-tm.release-18.1 | 584MB
 solr | dbmi/solr  | 4.5.0-tm.release-18.1 | 259MB
 fractalis | sherzinger/fractalis | 1.3.1 | 2.57GB
