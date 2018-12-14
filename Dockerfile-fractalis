@@ -2,3 +2,6 @@ ARG fractalis_version
 FROM sherzinger/fractalis:${fractalis_version}
 
 COPY config/fractalis/config.py /config.py
+
+RUN  sed -i "s/if status == 'RUNNING'\:/if \(status == 'CREATED') or \(status == 'RUNNING'):/g" /usr/lib/python3.6/site-packages/fractalis/data/etls/picsure/shared.py
+
