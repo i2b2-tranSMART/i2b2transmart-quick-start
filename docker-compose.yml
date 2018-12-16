@@ -187,6 +187,8 @@ services:
     env_file:
       - ${ENV_FILE}
     restart: always
+    depends_on:
+      - hpdsui
     networks:
       - public
     expose:
