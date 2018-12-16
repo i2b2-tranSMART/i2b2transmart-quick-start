@@ -26,6 +26,7 @@ HTTPS_PORT=
 
 ## Deploy
 
+# Note: If you have already installed an older version of the Quickstart you must stop it before starting the new one. The best approach is to recreate your docker-machine from scratch.
 
 # start by running the new PIC-SURE HPDS UI, it will give you something to do while the other images download.
 ```bash
