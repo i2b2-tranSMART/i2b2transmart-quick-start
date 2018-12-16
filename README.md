@@ -31,6 +31,10 @@ HTTPS_PORT=
 ```bash
 $ cd deployments/i2b2transmart/release-18.1/quickstart
 
+# start by running the new PIC-SURE HPDS UI, it will give you something to do while the other images download.
+$ docker-compose up -d nhaneshpds
+
+
 # images take several minutes to download, start by just downloading the DB image
 $ docker-compose pull db
 
