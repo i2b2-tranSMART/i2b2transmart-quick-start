@@ -7,7 +7,7 @@ _Database is pre-populated with the CDC NHANES public dataset (41,474 patients w
 -   4 cpu cores
 -   8GB RAM
 -   128GB of free Hard Drive space
--   [Docker for Mac](https://docs.docker.com/docker-for-mac) and [Docker for Windows](https://docs.docker.com/docker-for-windows/) are not supported unless you use docker-machine to create a VM that meets the requirements for RAM and Hard Drive space.
+-   [Docker for Mac](https://docs.docker.com/docker-for-mac) and [Docker for Windows](https://docs.docker.com/docker-for-windows/) are not supported unless you use [docker-machine](https://docs.docker.com/machine/install-machine/) to create a VM that meets the requirements for RAM and Hard Drive space.
 
 ## Docker Network Requirements
 
@@ -84,4 +84,4 @@ Biggest point of failure is deploying the database for the first time. Due to it
 https://discuss.i2b2transmart.org
 
 ## Docker-machine installation - MAC/Windows
-https://tinyurl.com/docker-VM
+https://tinyurl.com/docker-VM <- These are the unofficial instructions created for i2b2/tranSMART, they are probably out of date, use the official ones instead : https://docs.docker.com/machine/install-machine/
