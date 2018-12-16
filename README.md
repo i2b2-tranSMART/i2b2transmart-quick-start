@@ -32,7 +32,7 @@ HTTPS_PORT=
 $ docker-compose up -d nhaneshpds
 ```
 
-## The i2b2/tranSMART images will take several minutes to become available, while you wait you should check out the new PIC-SURE HPDS UI which will be the landing page of your stack. Browse to your docker-machine IP to try it out as you wait for the remaining steps of the setup to complete. You will still need to check on each of the following steps as they will run into intermittent network failures while you download about 40GB of compressed data. To get to i2b2/tranSMART once the following steps have completed successfully, click the Advanced Phenotype Search button in the PIC-SURE UI.
+# The i2b2/tranSMART images will take several minutes to become available, while you wait you should check out the new PIC-SURE HPDS UI which will be the landing page of your stack. Browse to your docker-machine IP to try it out as you wait for the remaining steps of the setup to complete. You will still need to check on each of the following steps as they will run into intermittent network failures while you download about 40GB of compressed data. To get to i2b2/tranSMART once the following steps have completed successfully, click the Advanced Phenotype Search button in the PIC-SURE UI.
 
 ## Note: when you run this next command it will download about 40GB of data from the internet. Please be mindful of this if you are charged for data transfer.
 
@@ -41,9 +41,10 @@ $ docker-compose up -d nhaneshpds
 $ docker-compose pull db
 ```
 
-# NOTE: if you are running docker-compose version 1.21.0+
-# and the pull command fails, try:
-# $ docker-compose pull --no-parallel
+# NOTE: if you are running docker-compose version 1.21.0+ and the pull command fails, try:
+```bash
+$ docker-compose pull --no-parallel db
+```
 
 # deploy database *first deploy only*
 # database may hang here for a few minutes
