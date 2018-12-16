@@ -1,9 +1,12 @@
-# i2b2/tranSMART release-18.1 Quick-Start
+# i2b2/tranSMART release-18.1 Quick-Start, and PIC-SURE HPDS UI
 
 _Database is pre-populated with the CDC NHANES public dataset (41,474 patients with 1,300 variables per patient)_
 
+Note: when you run this it will download about 40GB of data from the internet. Please be mindful of this if you are charged for data transfer.
+
 ## Docker Host Hardware Requirements
 
+-   4 cpu cores
 -   8GB RAM
 -   128GB of free Hard Drive space
 -   [Docker for Mac](https://docs.docker.com/docker-for-mac) and [Docker for Windows](https://docs.docker.com/docker-for-windows/) are not supported unless you use docker-machine to create a VM that meets the requirements for RAM and Hard Drive space.
@@ -21,15 +24,15 @@ HTTPS_PORT=
 ## Compatible Docker Versions
 
     Docker: 17.06.2+
-    docker-compose: 1.14.0+
+    docker-compose: 1.21.0+
 
 ## Deploy
 
 ```bash
 $ cd deployments/i2b2transmart/release-18.1/quickstart
 
-# images take several minutes to download
-$ docker-compose pull
+# images take several minutes to download, start by just downloading the DB image
+$ docker-compose pull db
 
 # NOTE: if you are running docker-compose version 1.21.0+
 # and the pull command fails, try:
@@ -40,47 +43,31 @@ $ docker-compose pull
 $ export COMPOSE_HTTP_TIMEOUT=300
 $ docker-compose up -d db
 
-# verify database is up and running *first deploy only*
-$ docker-compose logs -f db
-# db_1            |#########################
-# db_1            | DATABASE IS READY TO USE!
-# db_1            | #########################
+#download all other images while the DB starts up
+$ docker-compose pull
 
 # deploy i2b2/tranSMART + fractalis
 $ docker-compose up -d
 ```
 
+# The i2b2/tranSMART images will take several minutes to become available, while you wait you should check out the new PIC-SURE HPDS UI which will be the landing page of your stack. To get to i2b2/tranSMART once it starts, click the Advanced Phenotype Search button.
+
 ### To stop and remove the stack
 
 ```bash
 # -v will remove any associated persistent volumes, including the database, with the stack
-$ docker-compose -f prod.yml down -v
+$ docker-compose down -v
 ```
 
 ## Test i2b2/tranSMART release-18.1
 
 1.  Browse to your docker machine IP
-2.  i2b2/tranSMART, by default, uses self-signed certificates. If the browser complains about security, 'click OK' to allow for security exception.
-3.  Default username and passwords are used, e.g. admin/admin
 
 ## Troubleshoot
 
+If you get "socket read timeout" errors while pulling the images, just retry the pull. Eventually it will succeed.
+
 Biggest point of failure is deploying the database for the first time. Due to its size and resource requirements, your Docker client may timeout during first deployment of the database.
-
-Docker is transferring the data from the Docker database image to the named volume `quickstart_i2b2transmart-db`. Notice, by running `docker system df` the total volume size increase:
-
-```bash
-TYPE          TOTAL         ACTIVE        SIZE          RECLAIMABLE
-Local Volumes 11            2             25.24GB       25.24GB (100%)
-```
-
-If you run into a timeout error:
-
-```bash
-ERROR: for quickstart_db_1  HTTPSConnectionPool(host='xxxx', port=2376): Read timed out. (read timeout=60)
-```
-
-Wait for data transfer to complete and the client to re-sync with the docker machine (~100s). Resume the deployment by running `docker-compose up -d db` again.
 
 ## Open discussion forum
 https://discuss.i2b2transmart.org
