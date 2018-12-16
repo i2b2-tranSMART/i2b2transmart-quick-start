@@ -26,18 +26,20 @@ HTTPS_PORT=
 
 ## Deploy
 
-```bash
-$ cd deployments/i2b2transmart/release-18.1/quickstart
 
 # start by running the new PIC-SURE HPDS UI, it will give you something to do while the other images download.
+```bash
 $ docker-compose up -d nhaneshpds
+```
 
 ## The i2b2/tranSMART images will take several minutes to become available, while you wait you should check out the new PIC-SURE HPDS UI which will be the landing page of your stack. Browse to your docker-machine IP to try it out as you wait for the remaining steps of the setup to complete. You will still need to check on each of the following steps as they will run into intermittent network failures while you download about 40GB of compressed data. To get to i2b2/tranSMART once the following steps have completed successfully, click the Advanced Phenotype Search button in the PIC-SURE UI.
 
 ## Note: when you run this next command it will download about 40GB of data from the internet. Please be mindful of this if you are charged for data transfer.
 
 # images take several minutes to download, start by just downloading the DB image
+```bash
 $ docker-compose pull db
+```
 
 # NOTE: if you are running docker-compose version 1.21.0+
 # and the pull command fails, try:
@@ -45,13 +47,18 @@ $ docker-compose pull db
 
 # deploy database *first deploy only*
 # database may hang here for a few minutes
+```bash
 $ export COMPOSE_HTTP_TIMEOUT=300
 $ docker-compose up -d db
+```
 
-#download all other images while the DB starts up
+# download all other images while the DB starts up
+```bash
 $ docker-compose pull
+```
 
 # deploy i2b2/tranSMART + fractalis
+```bash
 $ docker-compose up -d
 ```
 
