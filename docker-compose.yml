@@ -195,7 +195,7 @@ services:
       - 8080
 
   hpdsui:
-    image: dbmi/pic-sure-hpds-ui:18.1-Quickstart
+    image: dbmi/pic-sure-hpds-ui:18.1-Quickstart-v2
     restart: always
     env_file:
       - ${ENV_FILE}
