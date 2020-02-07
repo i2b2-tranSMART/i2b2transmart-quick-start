@@ -4,7 +4,9 @@ services:
   ## i2b2transmart stack ##
   # transmart
   transmart:
-    image: dbmi/i2b2transmart:18.1-Quickstart
+#    image: dbmi/i2b2transmart:18.1-Quickstart
+    build:
+        context: ./transmart
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
@@ -145,14 +147,16 @@ services:
 
   # PIC-SURE i2b2-wildfly resource
   i2b2-wildfly:
-    image: dbmi/i2b2-wildfly:18.1-Quickstart
+#    image: dbmi/i2b2-wildfly:18.1-Quickstart
+    build:
+        context: ./i2b2-wildfly
     labels:
       - "edu.hms.harvard.dbmi.stack.name=${STACK_NAME}"
       - "edu.hms.harvard.dbmi.stack.env=${STACK_ENV}"
     env_file:
       - ${ENV_FILE}
     environment:
-      - JAVA_OPTS=-Xms512m -Xmx1024m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true
+      - JAVA_OPTS=-Xms512m -Xmx4096m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true
     restart: always
     networks:
       - public
@@ -195,8 +199,11 @@ services:
       - 8080
 
   hpdsui:
-    image: dbmi/pic-sure-hpds-ui:18.1-Quickstart-v2
+#    image: dbmi/pic-sure-hpds-ui:18.1-Quickstart-v2
+    build:
+      context: ./hpdsui
     restart: always
+    user: root
     env_file:
       - ${ENV_FILE}
     expose:
@@ -205,7 +212,9 @@ services:
       - 80:80
     networks:
       - public
-
+#    volumes:
+#      - /home/centos/tsmart-overrides.js:/usr/local/apache2/htdocs/tsmart-overrides.js:rw
+#      - /home/centos/httpd-vhosts.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf:rw
 volumes:
   # PIC-SURE database
   irct-data:
